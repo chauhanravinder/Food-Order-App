@@ -1,4 +1,6 @@
 import styles from "./AvailableMeals.module.css";
+import Card from "../UI/Card";
+import MealItem from "./MealItem/MealItem";
 const AVAILABLE_MEALS = [
   {
     id: 1,
@@ -29,11 +31,18 @@ const AVAILABLE_MEALS = [
 const AvailableMeals = () => {
   return (
     <section className={styles.meals}>
-      <ul>
-        {AVAILABLE_MEALS.map((meal, index) => (
-          <li>{meal.name}</li>
-        ))}
-      </ul>
+      <Card>
+        <ul>
+          {AVAILABLE_MEALS.map((meal, index) => (
+            <MealItem
+              name={meal.name}
+              description={meal.description}
+              price={meal.price}
+              key={index}
+            />
+          ))}
+        </ul>
+      </Card>
     </section>
   );
 };
