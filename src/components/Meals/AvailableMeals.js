@@ -31,13 +31,15 @@ const AVAILABLE_MEALS = [
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchMeals = async () => {
+      setIsLoading(true);
       const response = await fetch(
         "https://food-order-app-c270b-default-rtdb.firebaseio.com/meals.json"
       );
       const responseData = await response.json();
-
       const loadedMeals = [];
       for (const key in responseData) {
         loadedMeals.push({
@@ -48,10 +50,19 @@ const AvailableMeals = () => {
         });
       }
       setMeals(loadedMeals);
+      setIsLoading(false);
     };
-
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={styles.MealsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return (
     <section className={styles.meals}>
       <Card>
